@@ -27,3 +27,5 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply from: '../assertions-android-sdk.gradle'

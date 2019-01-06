@@ -1,0 +1,16 @@
+apply from: '../assertions-sdk.gradle'
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact sourcesJar
+            from components.java
+        }
+    }
+}
