@@ -7,7 +7,7 @@ apply from: '../passwords.gradle'
  */
 ext {
     assertionsSdkGroupId = 'com.heershingenmosiken'
-    assertionsSdkVersion = '1.0.0'
+    assertionsSdkVersion = '1.0.1-SNAPSHOT'
 
     /**
      * This is list of libraries that we are going to publish.
