@@ -2,11 +2,9 @@ package com.heershingenmosiken.assertions.android
 
 import android.os.Handler
 import android.os.Looper
-import com.heershingenmosiken.assertions.AssertionHandler
-import com.heershingenmosiken.assertions.Assertions
-import com.heershingenmosiken.assertions.ThrowableFactory
+import com.heershingenmosiken.assertions.*
 
-object AndroidAssertions {
+object AndroidAssertions : DefaultAssertions() {
 
     /**
      * Application would crash if assertion happens (if it is not silent assertion).
@@ -20,55 +18,21 @@ object AndroidAssertions {
     }
 
     /**
-     * Add Assertion handler.
+     * Ensures that method called on UI thread, else raises exception provided by ThrowableFactory.
      */
-    fun addAssertionHandler(assertionHandler: AssertionHandler) {
-        Assertions.addAssertionHandler(assertionHandler)
+    fun assertUIThread(throwableFactory: ThrowableFactory) {
+        if (Looper.getMainLooper() != Looper.myLooper()) {
+            Assertions.fail(throwableFactory)
+        }
     }
 
     /**
-     * Add Assertion handler.
+     * Ensures that method called on UI thread, else raises exception provided by ThrowableFactory.
      */
-    fun addAssertionHandler(assertionHandler: (Throwable, Boolean) -> Unit) {
-        Assertions.addAssertionHandler(AssertionHandlerWrapper(assertionHandler))
-    }
-
-    /**
-     * Remove assertion handler.
-     */
-    fun removeAssertionHandler(assertionHandler: AssertionHandler) {
-        Assertions.removeAssertionHandler(assertionHandler)
-    }
-
-    /**
-     * Remove assertion handler.
-     */
-    fun removeAssertionHandler(assertionHandler: (Throwable, Boolean) -> Unit) {
-        Assertions.removeAssertionHandler(AssertionHandlerWrapper(assertionHandler))
-    }
-}
-
-/**
- * Ensures that method called on UI thread, else raises exception provided by ThrowableFactory.
- */
-fun Assertions.checkUIThread(throwableFactory: ThrowableFactory) {
-    if (Looper.getMainLooper() != Looper.myLooper()) {
-        Assertions.fail(throwableFactory)
-    }
-}
-
-/**
- * Ensures that method called on UI thread, else raises exception provided by ThrowableFactory.
- */
-fun Assertions.checkNotUIThread(throwableFactory: ThrowableFactory) {
-    if (Looper.getMainLooper() == Looper.myLooper()) {
-        Assertions.fail(throwableFactory)
-    }
-}
-
-data class AssertionHandlerWrapper(val assertionHandler: (Throwable, Boolean) -> Unit) : AssertionHandler {
-    override fun report(throwable: Throwable, silently: Boolean) {
-        assertionHandler.invoke(throwable, silently)
+    fun assertNotUIThread(throwableFactory: ThrowableFactory) {
+        if (Looper.getMainLooper() == Looper.myLooper()) {
+            Assertions.fail(throwableFactory)
+        }
     }
 }
 
@@ -76,9 +40,9 @@ object AndroidAssertionHandler : AssertionHandler {
 
     private val UI_HANDLER = Handler(Looper.getMainLooper())
 
-    override fun report(throwable: Throwable, silently: Boolean) {
-        if (!silently) {
-            UI_HANDLER.post(ThrowDelegateRunnable(throwable))
+    override fun handle(assertionData: AssertionData) {
+        if (!assertionData.silent) {
+            UI_HANDLER.post(ThrowDelegateRunnable(assertionData.throwable))
         }
     }
 
