@@ -1,5 +1,9 @@
 # android-assertions
+
 Provides Assertion functionality for android application.
+
+ [![Download](https://api.bintray.com/packages/dekalo-stanislav/heershingenmosiken/assertions-android/images/download.svg)](https://bintray.com/dekalo-stanislav/heershingenmosiken/assertions-android/_latestVersion)
+ [![Build Status](https://travis-ci.com/heershingenmosiken/android-assertions.svg?branch=master)](https://travis-ci.com/heershingenmosiken/android-assertions)
 
 ## Handle unhadled application state
 
