@@ -7,9 +7,9 @@ package com.heershingenmosiken.assertions
 /**
  * Main purpose is to add various assertions in IS_PRODUCTION mode.
  * And switch it off in production.
- *
+ * <p>
  * Assertion not works until you will add AssertionHandler.
- *
+ * <p>
  * Created by dekalo on 25.08.15.
  */
 object Assertions : DefaultAssertions()

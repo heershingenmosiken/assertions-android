@@ -1,9 +1,8 @@
 package com.heershingenmosiken.assertions;
 
 /**
- * Handler for happened assertion.
+ * Handler for assertions.
  */
-
 public interface AssertionHandler {
     void handle(AssertionData assertionData);
 }
