@@ -19,6 +19,12 @@ test {
     }
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
 dependencies {
     testCompile('org.junit.jupiter:junit-jupiter-api:5.3.2')
     testCompile('org.junit.jupiter:junit-jupiter-params:5.3.2')
