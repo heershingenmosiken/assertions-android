@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.TreeSet;
 
-public class Utils {
+public final class Utils {
 
     interface Predicate<T> {
         boolean test(T t);

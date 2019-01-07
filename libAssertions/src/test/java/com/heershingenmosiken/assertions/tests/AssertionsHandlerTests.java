@@ -1,6 +1,5 @@
 package com.heershingenmosiken.assertions.tests;
 
-import com.heershingenmosiken.assertions.AssertionData;
 import com.heershingenmosiken.assertions.AssertionHandler;
 import com.heershingenmosiken.assertions.Assertions;
 import com.heershingenmosiken.assertions.ThrowableFactory;
@@ -21,6 +20,25 @@ public class AssertionsHandlerTests {
     @Test
     void noHandlersTest() {
         Assertions.fail(EXCEPTION);
+        Assertions.fail(EXCEPTION_FACTORY);
+        Assertions.failSilently(EXCEPTION);
+    }
+
+    @Test
+    void silentFlagTest() {
+
+        AssertionHandler rethrowIfNotSilentHandler = assertionData -> {
+            if (!assertionData.silent) {
+                throw new AssertionHappensException(assertionData.throwable);
+            }
+        };
+
+        Assertions.addAssertionHandler(rethrowIfNotSilentHandler);
+
+        Assertions.failSilently(EXCEPTION);
+        org.junit.jupiter.api.Assertions.assertThrows(AssertionHappensException.class, () -> Assertions.fail(EXCEPTION));
+
+        Assertions.removeAssertionHandler(rethrowIfNotSilentHandler);
     }
 
     @Test
@@ -51,23 +69,6 @@ public class AssertionsHandlerTests {
         org.junit.jupiter.api.Assertions.assertEquals(5, count.intValue());
 
         for (AssertionHandler handler : handlers) Assertions.removeAssertionHandler(handler);
-    }
-
-    private static class AssertionCounterHandler implements AssertionHandler {
-
-        private final AtomicInteger counter;
-        private final Runnable action;
-
-        private AssertionCounterHandler(AtomicInteger counter, Runnable action) {
-            this.counter = counter;
-            this.action = action;
-        }
-
-        @Override
-        public void handle(AssertionData assertionData) {
-            counter.incrementAndGet();
-            action.run();
-        }
     }
 
     @Test
