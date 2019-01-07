@@ -21,4 +21,8 @@ cache:
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 
+script:
+  - ./gradlew clean lint test assemble
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

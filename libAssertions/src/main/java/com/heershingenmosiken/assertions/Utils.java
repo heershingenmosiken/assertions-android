@@ -2,7 +2,9 @@ package com.heershingenmosiken.assertions;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 public class Utils {
@@ -21,9 +23,9 @@ public class Utils {
         }
     }
 
-    public static <T> void filter(TreeSet<T> set, Predicate<T> filter) {
+    public static <T> void filter(Collection<T> queue, Predicate<T> filter) {
         List<T> itemsToRemove = new ArrayList<T>();
-        for (T item : set) if (filter.test(item)) itemsToRemove.add(item);
-        set.removeAll(itemsToRemove);
+        for (T item : queue) if (filter.test(item)) itemsToRemove.add(item);
+        queue.removeAll(itemsToRemove);
     }
 }

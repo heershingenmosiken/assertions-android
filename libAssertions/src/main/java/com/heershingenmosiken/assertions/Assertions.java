@@ -1,22 +1,23 @@
 package com.heershingenmosiken.assertions;
 
 import java.util.Collection;
-import java.util.TreeSet;
+import java.util.PriorityQueue;
 
 public class Assertions {
 
     private static final int DEFAULT_PRIORITY = 0;
-    private static final TreeSet<PriorityHandler> handlers = new TreeSet<>();
+    private static final PriorityQueue<PriorityHandler> handlers = new PriorityQueue<>(5, (l, r) -> r.priority - l.priority);
 
     /**
-     * Add AssertionHandler to handler list.
+     * Add AssertionHandler to handlers set, with DEFAULT_PRIORITY = 0
      */
     public static void addAssertionHandler(AssertionHandler assertionHandler) {
         handlers.add(new PriorityHandler(assertionHandler, DEFAULT_PRIORITY));
     }
 
     /**
-     * Add AssertionHandler to handler list, with DEFAULT_PRIORITY = 0.
+     * Add AssertionHandler to handler list, with provided priority.
+     * Handlers with greater priority will be invoked earlier.
      */
     public static void addAssertionHandler(AssertionHandler assertionHandler, int priority) {
         handlers.add(new PriorityHandler(assertionHandler, priority));
@@ -103,7 +104,7 @@ public class Assertions {
         }
     }
 
-    private static class PriorityHandler implements Comparable<PriorityHandler> {
+    private static class PriorityHandler {
 
         private final AssertionHandler handler;
         private final int priority;
@@ -111,11 +112,6 @@ public class Assertions {
         private PriorityHandler(AssertionHandler handler, int priority) {
             this.handler = handler;
             this.priority = priority;
-        }
-
-        @Override
-        public int compareTo(PriorityHandler other) {
-            return other.priority - priority;
         }
     }
 }

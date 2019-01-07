@@ -3,4 +3,17 @@ apply plugin: 'java'
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events 'PASSED', 'FAILED', 'SKIPPED'
+    }
+}
+
+dependencies {
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.3.2')
+    testCompile('org.junit.jupiter:junit-jupiter-params:5.3.2')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.2')
+}
+
 apply from: '../assertions-java-sdk.gradle'
