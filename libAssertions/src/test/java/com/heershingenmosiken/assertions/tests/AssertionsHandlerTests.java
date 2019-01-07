@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-
 public class AssertionsHandlerTests {
 
     private static Throwable EXCEPTION = new Exception();
