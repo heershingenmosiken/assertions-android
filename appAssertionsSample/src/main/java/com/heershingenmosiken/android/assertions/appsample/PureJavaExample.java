@@ -4,6 +4,6 @@ import com.heershingenmosiken.assertions.Assertions;
 
 public class PureJavaExample {
     {
-        Assertions.INSTANCE.failSilently(new IllegalStateException("Please do not use failSilently to often."));
+        Assertions.failSilently(new IllegalStateException("Please do not use failSilently to often."));
     }
 }
