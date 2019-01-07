@@ -117,6 +117,10 @@ implementation 'com.heershingenmosiken:assertions-java:1.+'
 
 It will share same AssertionHandlers with `assertions-android` module.
 
+## It is lightweight
+
+We have no any thirdapty dependencies.
+
 ## Silent trick
 
 There are situation when Assertion happens because of dependency that you couldn't fix right now. In this case we have tricky method silent fail method.
