@@ -1,29 +1,29 @@
 apply plugin: 'java'
-apply plugin: 'jacoco'
+//apply plugin: 'jacoco'
 
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-jacoco {
-    toolVersion = "0.8.1"
-}
+//jacoco {
+//    toolVersion = "0.8.1"
+//}
 
 test {
     useJUnitPlatform()
     testLogging {
         events 'PASSED', 'FAILED', 'SKIPPED'
     }
-    jacoco {
-        append = true
-        enabled = true
-    }
+//    jacoco {
+//        append = true
+//        enabled = true
+//    }
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-    }
-}
+//jacocoTestReport {
+//    reports {
+//        xml.enabled true
+//    }
+//}
 
 dependencies {
     testCompile('org.junit.jupiter:junit-jupiter-api:5.3.2')

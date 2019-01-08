@@ -46,16 +46,18 @@ publishing {
             version assertionsSdkVersion
 
             pom {
-                name = 'Assertions library'
-                description = 'Android client for gfycat.com'
-                url = 'https://github.com/heershingenmosiken/android-assertions'
+                description = 'Assertion library for android and java'
 
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
+//                will be enabled with gradle update to 4.10.
+//
+//                name = 'Assertions library'
+//                url = 'https://github.com/heershingenmosiken/android-assertions'
+//                licenses {
+//                    license {
+//                        name = 'The Apache License, Version 2.0'
+//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    }
+//                }
 
                 withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
