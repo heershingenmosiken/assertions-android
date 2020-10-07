@@ -1,11 +1,18 @@
 package com.heershingenmosiken.assertions.tests;
 
+import com.heershingenmosiken.assertions.AssertionData;
 import com.heershingenmosiken.assertions.AssertionHandler;
 import com.heershingenmosiken.assertions.Assertions;
 import com.heershingenmosiken.assertions.ThrowableFactory;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AssertionsHandlerTests {
@@ -13,9 +20,37 @@ public class AssertionsHandlerTests {
     private static Throwable EXCEPTION = new Exception();
     private static ThrowableFactory EXCEPTION_FACTORY = () -> EXCEPTION;
 
-    private static final AssertionHandler RETHROW_HANDLER = assertionData -> {
-        throw new AssertionHappensException(assertionData.throwable);
+    private static final AssertionHandler RETHROW_HANDLER = new AssertionHandler() {
+        @Override
+        public void log(String message) {
+            throw new IllegalStateException("log(" + message + ") called unexpectedly.");
+        }
+
+        @Override
+        public void handle(AssertionData assertionData) {
+            throw new AssertionHappensException(assertionData.throwable);
+        }
     };
+
+    @BeforeEach
+    void setup() {
+        cleanupHandlers();
+    }
+
+    @AfterEach
+    void tearDown() {
+        cleanupHandlers();
+    }
+
+    static void cleanupHandlers() {
+        try {
+            Field field = Assertions.class.getDeclaredField("handlers");
+            field.setAccessible(true);
+            ((PriorityQueue) field.get(null)).clear();
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
     @Test
     void noHandlersTest() {
@@ -27,9 +62,17 @@ public class AssertionsHandlerTests {
     @Test
     void silentFlagTest() {
 
-        AssertionHandler rethrowIfNotSilentHandler = assertionData -> {
-            if (!assertionData.silent) {
-                throw new AssertionHappensException(assertionData.throwable);
+        AssertionHandler rethrowIfNotSilentHandler = new AssertionHandler() {
+            @Override
+            public void log(String message) {
+                throw new IllegalStateException("log(" + message + ") called unexpectedly.");
+            }
+
+            @Override
+            public void handle(AssertionData assertionData) {
+                if (!assertionData.silent) {
+                    throw new AssertionHappensException(assertionData.throwable);
+                }
             }
         };
 
@@ -50,23 +93,21 @@ public class AssertionsHandlerTests {
 
     @Test
     void multipleAssertionsTest() {
-        AtomicInteger count = new AtomicInteger();
+        AtomicInteger counter = new AtomicInteger();
 
-        AssertionHandler handlers[] = new AssertionHandler[]{
-                assertionData -> count.incrementAndGet(),
-                assertionData -> count.incrementAndGet(),
-                assertionData -> count.incrementAndGet()
+        AssertionHandler[] handlers = new AssertionHandler[]{
+                new AssertionCounterHandler(counter), new AssertionCounterHandler(counter), new AssertionCounterHandler(counter)
         };
 
         for (AssertionHandler handler : handlers) Assertions.addAssertionHandler(handler);
 
         Assertions.fail(EXCEPTION);
-        org.junit.jupiter.api.Assertions.assertEquals(3, count.intValue());
+        org.junit.jupiter.api.Assertions.assertEquals(3, counter.intValue());
 
         Assertions.removeAssertionHandler(handlers[0]);
 
         Assertions.fail(EXCEPTION);
-        org.junit.jupiter.api.Assertions.assertEquals(5, count.intValue());
+        org.junit.jupiter.api.Assertions.assertEquals(5, counter.intValue());
 
         for (AssertionHandler handler : handlers) Assertions.removeAssertionHandler(handler);
     }
@@ -103,5 +144,34 @@ public class AssertionsHandlerTests {
         Assertions.fail(EXCEPTION);
 
         for (AssertionHandler handler : handlers) Assertions.removeAssertionHandler(handler);
+    }
+
+    @Test
+    void assertionsHandlerLogTest() {
+
+        String testMessage = "test message";
+
+        List<String> messages = new ArrayList<>();
+
+        AssertionHandler logTestHandler = new AssertionHandler() {
+
+            @Override
+            public void log(String message) {
+                messages.add(message);
+            }
+
+            @Override
+            public void handle(AssertionData assertionData) {
+                throw new AssertionHappensException(assertionData.throwable);
+            }
+        };
+
+        Assertions.addAssertionHandler(logTestHandler);
+
+        Assertions.log(testMessage);
+        org.junit.jupiter.api.Assertions.assertEquals(1, messages.size());
+        org.junit.jupiter.api.Assertions.assertEquals(testMessage, messages.get(0));
+
+        Assertions.removeAssertionHandler(logTestHandler);
     }
 }

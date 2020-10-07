@@ -44,6 +44,11 @@ public class AndroidAssertions extends Assertions {
         private Handler UI_HANDLER = new Handler(Looper.getMainLooper());
 
         @Override
+        public void log(String message) {
+            // ignore
+        }
+
+        @Override
         public void handle(AssertionData assertionData) {
             if (!assertionData.silent) {
                 UI_HANDLER.post(new ThrowDelegateRunnable(assertionData.throwable));

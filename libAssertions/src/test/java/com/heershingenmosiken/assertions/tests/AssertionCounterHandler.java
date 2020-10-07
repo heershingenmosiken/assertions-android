@@ -20,6 +20,11 @@ class AssertionCounterHandler implements AssertionHandler {
     }
 
     @Override
+    public void log(String message) {
+        throw new IllegalStateException("log(" + message + ") called unexpectedly.");
+    }
+
+    @Override
     public void handle(AssertionData assertionData) {
         counter.incrementAndGet();
         action.run();

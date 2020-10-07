@@ -41,6 +41,10 @@ public class Assertions {
         }
     }
 
+    public static void log(String message) {
+        Utils.forEach(handlers, priorityHandler -> priorityHandler.handler.log(message));
+    }
+
     /**
      * Assertion failed with throwable.
      */
@@ -102,6 +106,13 @@ public class Assertions {
         if (shouldNotBeEmpty.isEmpty()) {
             internalRaiseAssertion(throwableFactory, "AssertNotEmpty but size = " + shouldNotBeEmpty.size(), false);
         }
+    }
+
+    /**
+     * Test only.
+     */
+    private static void tearDown() {
+        handlers.clear();
     }
 
     private static class PriorityHandler {
