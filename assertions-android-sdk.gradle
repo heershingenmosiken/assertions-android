@@ -26,12 +26,14 @@ task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifact bundleReleaseAar
-            artifact androidSourcesJar
-            artifact androidJavadocsJar
+project.afterEvaluate {
+    publishing {
+        publications {
+            aar(MavenPublication) {
+                artifact bundleReleaseAar
+                artifact androidSourcesJar
+                artifact androidJavadocsJar
+            }
         }
     }
 }
