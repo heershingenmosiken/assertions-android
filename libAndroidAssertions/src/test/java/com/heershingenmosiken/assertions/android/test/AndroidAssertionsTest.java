@@ -41,7 +41,17 @@ public class AndroidAssertionsTest {
 
     private static AssertionData runWithAssertionResult(Runnable runnable) {
         AtomicReference<AssertionData> assertionDataReference = new AtomicReference<>();
-        AssertionHandler assertionHandler = assertionDataReference::set;
+        AssertionHandler assertionHandler = new AssertionHandler() {
+            @Override
+            public void log(String message) {
+                throw new IllegalStateException("log not supported in this test");
+            }
+
+            @Override
+            public void handle(AssertionData assertionData) {
+                assertionDataReference.set(assertionData);
+            }
+        };
         AndroidAssertions.addAssertionHandler(assertionHandler);
 
         runnable.run();

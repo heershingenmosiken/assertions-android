@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SampleAssertionApplication</string>
+    <string name="button_that_triggers_assertion_content_description">Button that triggers assertion.</string>
+    <string name="main_message">This is sample application for android assertion library. After press on Action button assertion will occur and application will crash or no depends on buildType.</string>
 </resources>
