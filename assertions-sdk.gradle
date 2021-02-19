@@ -28,7 +28,7 @@ bintray {
         repo = 'heershingenmosiken'
         name = assertionsSdkLibNames[project.name]
         userOrg = 'dekalo-stanislav'
-        vcsUrl = 'https://github.com/heershingenmosiken/android-assertions'
+        vcsUrl = 'https://github.com/heershingenmosiken/assertions-android'
 
         version {
             name = assertionsSdkVersion
@@ -48,7 +48,7 @@ publishing {
             pom {
                 name = 'Assertions library'
                 description = 'Android client for gfycat.com'
-                url = 'https://github.com/heershingenmosiken/android-assertions'
+                url = 'https://github.com/heershingenmosiken/assertions-android'
 
                 licenses {
                     license {

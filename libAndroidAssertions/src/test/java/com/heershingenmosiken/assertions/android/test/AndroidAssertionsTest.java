@@ -1,5 +1,7 @@
 package com.heershingenmosiken.assertions.android.test;
 
+import android.os.Build;
+
 import com.heershingenmosiken.assertions.AssertionData;
 import com.heershingenmosiken.assertions.AssertionHandler;
 import com.heershingenmosiken.assertions.ThrowableFactory;
@@ -9,11 +11,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
+@Config(sdk = {Build.VERSION_CODES.P})
 @RunWith(RobolectricTestRunner.class)
 public class AndroidAssertionsTest {
 
