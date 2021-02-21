@@ -20,15 +20,24 @@ before_install:
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-  -
+
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
 
-script:
-  - ./gradlew clean lint test build jacocoTestReport
+branches:
+  only:
+    - master
+
+jobs:
+  include:
+    - stage: build & test
+      script: ./gradlew clean lint test build jacocoTestReport
+    - stage: publish
+      if: branch = master AND type = push # publishing only changes from master
+      script: ./jcenter.publish.attempt.sh
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
