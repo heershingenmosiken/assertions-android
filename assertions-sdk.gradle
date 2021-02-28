@@ -47,7 +47,7 @@ publishing {
 
             pom {
                 name = 'Assertions library'
-                description = 'Android client for gfycat.com'
+                description = 'Assertions library for Android applications'
                 url = 'https://github.com/heershingenmosiken/assertions-android'
 
                 licenses {

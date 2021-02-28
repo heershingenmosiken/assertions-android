@@ -36,7 +36,7 @@ jobs:
     - stage: build & test
       script: ./gradlew clean lint test build jacocoTestReport
     - stage: publish
-      if: branch = master AND type = push # publishing only changes from master
+      if: (branch = master OR branch =~ /^release.*/) AND type = push # publishing only changes from master and release branches
       script: ./jcenter.publish.attempt.sh
 
 after_success:
