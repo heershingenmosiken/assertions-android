@@ -1,13 +1,13 @@
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
-apply from: '../passwords.gradle'
+apply from: '../secrets.gradle'
 
 /**
  * This script is responsible for assertions-sdk publishing to maven repository.
  */
 ext {
     assertionsSdkGroupId = 'com.heershingenmosiken'
-    assertionsSdkVersion = '1.1.2'
+    assertionsSdkVersion = '1.2.0'
 
     /**
      * This is list of libraries that we are going to publish.
@@ -20,8 +20,8 @@ ext {
 }
 
 bintray {
-    user = getAssertionsBintrayUser()
-    key = getAssertionsBintrayApiKey()
+    user = getSecretValue('ASSERTIONS_BINTRAY_USER')
+    key = getSecretValue('ASSERTIONS_BINTRAY_API_KEY')
     publications = ['maven']
     publish = true
     pkg {
