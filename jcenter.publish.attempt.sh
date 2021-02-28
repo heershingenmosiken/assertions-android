@@ -48,7 +48,7 @@ fi
 
 ### Publishing
 
-if ./gradlew artifactoryPublish artifactoryDeploy; then
+if ./gradlew bintrayUpload bintrayPublish; then
   git tag $ASSERTIONS_VERSION -a -m "$ASSERTIONS_VERSION" HEAD
   git push -q origin $ASSERTIONS_VERSION
   echo "$ASSERTIONS_VERSION successfully published."
