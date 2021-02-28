@@ -29,7 +29,7 @@ task androidSourcesJar(type: Jar) {
 project.afterEvaluate {
     publishing {
         publications {
-            aar(MavenPublication) {
+            maven(MavenPublication) {
                 artifact bundleReleaseAar
                 artifact androidSourcesJar
                 artifact androidJavadocsJar
