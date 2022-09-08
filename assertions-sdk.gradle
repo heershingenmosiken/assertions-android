@@ -1,5 +1,4 @@
 apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
 apply from: '../secrets.gradle'
 
 /**
@@ -17,24 +16,6 @@ ext {
             libAssertions       : 'assertions-java',
             libAndroidAssertions: 'assertions-android'
     ]
-}
-
-bintray {
-    user = getSecretValue('ASSERTIONS_BINTRAY_USER')
-    key = getSecretValue('ASSERTIONS_BINTRAY_API_KEY')
-    publications = ['maven']
-    publish = true
-    pkg {
-        repo = 'heershingenmosiken'
-        name = assertionsSdkLibNames[project.name]
-        userOrg = 'dekalo-stanislav'
-        vcsUrl = 'https://github.com/heershingenmosiken/assertions-android'
-
-        version {
-            name = assertionsSdkVersion
-            released = new Date()
-        }
-    }
 }
 
 publishing {

@@ -3,8 +3,9 @@ package com.heershingenmosiken.android.assertions.appsample
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_sample.*
+import androidx.appcompat.widget.Toolbar
 import com.heershingenmosiken.assertions.Assertions
 
 class SampleActivity : AppCompatActivity() {
@@ -12,9 +13,9 @@ class SampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
-        fab.setOnClickListener {
+        findViewById<View>(R.id.fab).setOnClickListener {
             Assertions.fail(IllegalStateException("Assertion occurred"))
         }
     }
