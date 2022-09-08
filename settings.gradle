@@ -1,3 +1,6 @@
 include ':libAndroidAssertions'
-include ':libAssertions'
+include ':libJavaAssertions'
+include ':libKotlinAssertions'
+
 include ':appAssertionsSample'
+
