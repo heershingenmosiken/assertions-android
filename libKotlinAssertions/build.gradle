@@ -11,3 +11,5 @@ java {
 dependencies {
     implementation project(':libJavaAssertions')
 }
+
+apply from: '../assertions-java-sdk.gradle'
