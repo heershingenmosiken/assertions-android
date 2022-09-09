@@ -1,12 +1,9 @@
 apply plugin: 'maven-publish'
-apply from: '../secrets.gradle'
 
 /**
  * This script is responsible for assertions-sdk publishing to maven repository.
  */
 ext {
-    assertionsSdkGroupId = 'com.heershingenmosiken'
-    assertionsSdkVersion = '1.3.0-SNAPSHOT'
 
     /**
      * This is list of libraries that we are going to publish.
@@ -23,9 +20,9 @@ publishing {
     publications {
         maven(MavenPublication) {
 
-            groupId assertionsSdkGroupId
+            groupId assertionSdkGroup
             artifactId assertionsSdkLibNames[project.name]
-            version assertionsSdkVersion
+            version assertionSdkVersion
 
             pom {
                 name = 'Assertions library'

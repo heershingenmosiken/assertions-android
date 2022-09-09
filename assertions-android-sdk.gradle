@@ -1,3 +1,5 @@
+import sun.lwawt.macosx.CPrinterDevice
+
 apply from: '../assertions-sdk.gradle'
 
 /**
@@ -53,9 +55,9 @@ project.afterEvaluate {
                                  * It is local project dependency and it is declared in sdkLibNames above.
                                  */
                                 def dependencyNode = dependenciesNode.appendNode('dependency')
-                                dependencyNode.appendNode('groupId', assertionsSdkGroupId)
+                                dependencyNode.appendNode('groupId', assertionSdkGroup)
                                 dependencyNode.appendNode('artifactId', assertionsSdkLibNames[it.name])
-                                dependencyNode.appendNode('version', assertionsSdkVersion)
+                                dependencyNode.appendNode('version', assertionSdkVersion)
                             }
                         }
                     }

@@ -1,7 +1,3 @@
-[![Download](https://api.bintray.com/packages/dekalo-stanislav/heershingenmosiken/assertions-android/images/download.svg)](https://bintray.com/dekalo-stanislav/heershingenmosiken/assertions-android/_latestVersion)
- [![Build Status](https://travis-ci.com/heershingenmosiken/assertions-android.svg?branch=master)](https://travis-ci.com/heershingenmosiken/assertions-android) [![codecov](https://codecov.io/gh/heershingenmosiken/assertions-android/branch/master/graph/badge.svg)](https://codecov.io/gh/heershingenmosiken/assertions-android)
-
-
 # assertions-android
 
 Assertions functionality for Android Applications.
